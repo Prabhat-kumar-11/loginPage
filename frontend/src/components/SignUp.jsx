@@ -82,7 +82,7 @@ const SignUp = () => {
             />
           </div>
           <button type="submit">Submit</button>
-          {error && <p style={{ color: login === "New user has been registered" ? "green" : "red"}}>{error}</p>}
+          {error && <p style={{ color: error === "New user has been registered" ? "green" : "red"}}>{error}</p>}
           <h2 align="center" className="or">
             OR
           </h2>
