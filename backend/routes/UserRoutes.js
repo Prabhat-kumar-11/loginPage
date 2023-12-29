@@ -41,7 +41,7 @@ userRouter.post("/login", async (req, res) => {
       if (passwordMatch) {
         const token = jwt.sign(
           { authorID: user._id, author: user.name },
-          "masai"
+          process.env.jwtSecret,{expiresIn:"1h"}
         );
         res.status(200).send({ msg: "Login Successful", token });
       } else {

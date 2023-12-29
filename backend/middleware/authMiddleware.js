@@ -6,7 +6,7 @@ const auth = (req, res, next) => {
 
   if (token) {
     try {
-      const decoded = jwt.verify(token.split(" ")[1], "masai");
+      const decoded = jwt.verify(token.split(" ")[1], process.env.jwtSecret);
       if (decoded) {
         req.body.authorID = decoded.authorID;
         req.body.author = decoded.author;

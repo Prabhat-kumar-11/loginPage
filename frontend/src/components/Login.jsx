@@ -1,6 +1,7 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuthContext } from "../AuthContext";
 
 const URL = "https://vast-tan-pike-vest.cyclic.app/";
 
@@ -8,6 +9,8 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [login, setLogin] = useState("");
+
+  const { isAuth, setUserToken, removeUserToken } = useAuthContext();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -19,13 +22,47 @@ export default function Login() {
       });
 
       console.log(response.data.msg);
+      setUserToken(response.data.token);
       setLogin(response.data.msg);
     } catch (err) {
       setLogin(err.response.data.msg);
     }
   };
 
-  return (
+  return isAuth ? (
+    <div
+      style={{
+        width: "300px",
+        marginTop: "20%",
+        placeItems: "center",
+        alignItems: "center",
+        border: "1px solid #ccc",
+        padding: "20px",
+        textAlign: "center",
+        backgroundColor:" #6b97bd",
+        borderRadius:"8px"
+      }}
+    >
+      <h2>Welcome User</h2>
+      <button
+        style={{
+          backgroundColor: " #80c7e0", // light blue color
+          color: "white",
+          padding: "10px",
+          borderRadius: "5px",
+          cursor: "pointer",
+        }}
+        onClick={() => {
+          removeUserToken();
+          setEmail("");
+          setPassword("");
+          setLogin("");
+        }}
+      >
+        Sign Out
+      </button>
+    </div>
+  ) : (
     <div className="wrapper signIn">
       <div className="illustration">
         <img src="https://source.unsplash.com/random" alt="illustration" />
